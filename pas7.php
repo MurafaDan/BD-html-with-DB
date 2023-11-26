@@ -54,7 +54,33 @@ deleteForm.addEventListener('submit', function (event) {
   // Send the form data using POST
   xhr.send(formData);
 });
-};
+
+var insertForm = document.getElementById('insertForm');
+
+    insertForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            document.getElementById('eroi').innerHTML = xhr.responseText;
+          } else {
+            console.error('Error adding record:', xhr.status, xhr.statusText);
+          }
+        }
+      };
+
+      // Adjust the URL based on the selected table
+      xhr.open('POST', 'insert_erou.php', true);
+
+      // Serialize form data
+      var formData = new FormData(insertForm);
+
+      // Send the form data using POST
+      xhr.send(formData);
+    });
+  };
   </script>
 </head>
 
@@ -217,47 +243,7 @@ deleteForm.addEventListener('submit', function (event) {
 
       <input type="submit" value="Submit">
   </form>
-  <div class="phpstyle">
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        require_once 'connect_bd.php';
 
-        $nume_erou = $_POST['nume_erou'];
-        $tip_erou = $_POST['tip_erou'];
-
-        // Check if the record already exists
-        $checkSql = "SELECT COUNT(*) FROM eroi WHERE nume_erou = '$nume_erou'";
-        $checkResult = mysqli_query($link, $checkSql);
-
-        if ($checkResult) {
-            $row = mysqli_fetch_array($checkResult);
-            $recordExists = $row[0] > 0;
-
-            if (!$recordExists) {
-                // Record doesn't exist, so insert it
-                $insertSql = "INSERT IGNORE INTO eroi (nume_erou, tip_erou) VALUES ('$nume_erou', '$tip_erou')";
-                $insertResult = mysqli_query($link, $insertSql);
-
-                if ($insertResult) {
-                    if (mysqli_affected_rows($link) > 0) {
-                        echo "Record added successfully!";
-                    } else {
-                        echo "Record already exists!";
-                    }
-                } else {
-                    echo "Error adding record: " . mysqli_error($link);
-                }
-            } else {
-                echo "Record with nume_erou '$nume_erou' already exists!";
-            }
-        } else {
-            echo "Error checking record existence: " . mysqli_error($link);
-        }
-
-     
-    }
-    ?>
-</div>
 <h1>Sterge un personaj!</h1> 
 <div class="phpstyle"> 
         <?php include 'delete_erou.php'; ?>
@@ -270,5 +256,31 @@ deleteForm.addEventListener('submit', function (event) {
 </form>
 </form>
 </div>
+<h1>Detalii Erou</h1>
+<form method="GET" action="#" class="forma_tabel2" id="outputForm">
+    <label for="search_erou">Cauta Nume Erou:</label>
+    <input type="text" name="search_erou" id="search_erou" required>
+    <input type="submit" name="searchSubmit" value="Cauta">
+</form>
+
+<div id="outputResult"></div>
+
+<script>
+    document.getElementById('outputForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var search_erou = document.getElementById('search_erou').value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('outputResult').innerHTML = xhr.responseText;
+            }
+        };
+
+        xhr.open('GET', 'output.php?search_erou=' + search_erou, true);
+        xhr.send();
+    });
+</script>
 </body>
 </html>

@@ -1,0 +1,26 @@
+<h1>Detalii Erou</h1>
+<form method="GET" action="#" class="forma_tabel2" id="outputForm">
+    <label for="search_erou">Cauta Nume Erou:</label>
+    <input type="text" name="search_erou" id="search_erou" required>
+    <input type="submit" name="searchSubmit" value="Cauta">
+</form>
+
+<div id="outputResult"></div>
+
+<script>
+    document.getElementById('outputForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var search_erou = document.getElementById('search_erou').value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('outputResult').innerHTML = xhr.responseText;
+            }
+        };
+
+        xhr.open('GET', 'output.php?search_erou=' + search_erou, true);
+        xhr.send();
+    });
+</script>
