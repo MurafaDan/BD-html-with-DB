@@ -223,6 +223,7 @@ var insertForm = document.getElementById('insertForm');
                       <input type="radio" name="tabel" value="obiecte" id="Obiecte">
                       <label for="Obiecte">Obiecte</label>
                   </td>
+               
                   <td>
                       <input type="submit" value="Submit">
                   </td>
