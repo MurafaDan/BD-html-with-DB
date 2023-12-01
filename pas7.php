@@ -88,7 +88,7 @@ var insertForm = document.getElementById('insertForm');
     <header class="header">
         <a href="https://www.grimmstories.com/ro/grimm_basme/hansel_si_gretel" class="logo">Hansel & Grettel</a>
         <nav class="navbar">
-            <a href="#table"><img src="tabel.png" alt="tabel" width="40px" height="40px"></a>
+            <a href="#insertForm"><img src="tabel.png" alt="tabel" width="40px" height="40px"></a>
             <a href="#video"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/640px-YouTube_full-color_icon_%282017%29.svg.png" alt="video" width="50px" height="30px"></a>
             <a href="pas1.html">Pasul 1</a>
             <a href="pas2.html">Pasul 2</a>
