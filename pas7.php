@@ -81,6 +81,21 @@ var insertForm = document.getElementById('insertForm');
       xhr.send(formData);
     });
   };
+  document.getElementById('outputForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var search_erou = document.getElementById('search_erou').value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('outputResult').innerHTML = xhr.responseText;
+            }
+        };
+
+        xhr.open('GET', 'output.php?search_erou=' + search_erou, true);
+        xhr.send();
+    });
   </script>
 </head>
 
